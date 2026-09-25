@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "MessMate",
+    "slug": "messmate",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "messmate",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#F3FAF6",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.messmate.app"
+    },
+    "android": {
+      "package": "com.messmate.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#005D42",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-sharing"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7df25a03-e968-4318-8d98-bc424d91a3a8"
+      }
+    },
+    "owner": "sahil0002"
+  }
+}
