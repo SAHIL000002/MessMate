@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>MessMate - Meals</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-variant": "#d9e6dd",
+            "surface-container-high": "#deebe3",
+            "surface-bright": "#f0fdf4",
+            "primary-fixed": "#97f5cc",
+            "on-secondary": "#ffffff",
+            "primary": "#005d42",
+            "on-primary-fixed": "#002115",
+            "primary-fixed-dim": "#7bd8b1",
+            "on-error": "#ffffff",
+            "secondary": "#855300",
+            "on-primary-container": "#9ffdd3",
+            "tertiary": "#495167",
+            "tertiary-fixed-dim": "#bec6e0",
+            "error": "#ba1a1a",
+            "secondary-fixed-dim": "#ffb95f",
+            "on-background": "#131e19",
+            "surface-dim": "#d0ddd5",
+            "on-primary": "#ffffff",
+            "on-tertiary-container": "#e4e9ff",
+            "tertiary-fixed": "#dae2fd",
+            "surface-container-lowest": "#ffffff",
+            "tertiary-container": "#616980",
+            "secondary-container": "#fea619",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#653e00",
+            "on-surface": "#131e19",
+            "surface-container": "#e4f1e8",
+            "background": "#f0fdf4",
+            "on-secondary-container": "#684000",
+            "surface-container-highest": "#d9e6dd",
+            "outline-variant": "#bdc9c1",
+            "on-error-container": "#93000a",
+            "on-tertiary-fixed-variant": "#3f465c",
+            "surface": "#f0fdf4",
+            "on-surface-variant": "#3e4943",
+            "primary-container": "#047857",
+            "inverse-on-surface": "#e7f4eb",
+            "inverse-surface": "#27332d",
+            "surface-container-low": "#eaf7ee",
+            "on-primary-fixed-variant": "#00513a",
+            "on-secondary-fixed": "#2a1700",
+            "surface-tint": "#006c4e",
+            "on-tertiary-fixed": "#131b2e",
+            "outline": "#6e7a73",
+            "secondary-fixed": "#ffddb8",
+            "inverse-primary": "#7bd8b1",
+            "on-tertiary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-xl": "2.5rem",
+            "gutter": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-md": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-sm": ["20px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- TopAppBar Component -->
+<header class="sticky top-0 z-40 bg-background text-primary border-b-2 border-outline">
+<div class="flex justify-between items-center w-full px-4 py-3 max-w-md mx-auto">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+<h1 class="font-headline text-2xl font-extrabold uppercase tracking-tighter text-primary">MessMate</h1>
+</div>
+<div class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm shadow-sm border border-outline">
+        SA
+      </div>
+</div>
+</header>
+<!-- Main Content Container -->
+<main class="max-w-md mx-auto px-4 py-4 space-y-6">
+<!-- Page Title & Subtitle -->
+<div>
+<h2 class="font-headline-sm text-on-surface">Meals</h2>
+<p class="text-on-surface-variant text-body-sm mt-0.5">Update your breakfast and dinner for any day.</p>
+</div>
+<!-- Joining Date Card -->
+<div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant flex items-center justify-between shadow-sm">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed text-on-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">event_available</span>
+</div>
+<div>
+<span class="block text-label-sm text-outline uppercase tracking-wider">MESS JOINED</span>
+<span class="font-label-md text-on-surface">05 September 2026</span>
+</div>
+</div>
+
+</div>
+<!-- Date Selector -->
+<div class="bg-surface-container rounded-xl p-3 border border-outline-variant flex items-center justify-between shadow-sm">
+<button class="p-2 rounded-lg hover:bg-surface-container-high text-primary flex items-center text-label-md">
+<span class="material-symbols-outlined text-sm mr-1">chevron_left</span> Prev
+      </button>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-secondary text-lg">calendar_today</span>
+<span class="font-headline-sm text-on-surface text-base">06 September 2026</span>
+</div>
+<button class="p-2 rounded-lg hover:bg-surface-container-high text-primary flex items-center text-label-md">
+        Next <span class="material-symbols-outlined text-sm ml-1">chevron_right</span>
+</button>
+</div>
+<!-- Meal Editor for Selected Date -->
+<section class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant space-y-4 shadow-sm">
+<div class="border-b border-outline-variant pb-2">
+<h3 class="font-headline-sm text-primary flex items-center justify-between">
+<span class="">Edit Daily Status</span>
+<span class="text-label-sm text-outline-variant">06 Sep 2026</span>
+</h3>
+</div>
+<!-- Breakfast Editor -->
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low">
+<div>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-secondary text-lg">wb_sunny</span>
+<span class="font-label-md text-on-surface">BREAKFAST</span>
+</div>
+<span class="text-label-sm text-primary font-bold mt-0.5 block">EATEN</span>
+</div>
+<div class="flex space-x-2">
+<button class="px-3 py-1.5 rounded bg-primary-container text-on-primary-container text-label-sm font-bold shadow-sm">EATEN</button>
+<button class="px-3 py-1.5 rounded bg-surface-variant text-on-surface-variant text-label-sm font-medium hover:bg-error-container hover:text-on-error-container">NOT EATEN</button>
+</div>
+</div>
+<!-- Dinner Editor -->
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low">
+<div>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-tertiary text-lg">dark_mode</span>
+<span class="font-label-md text-on-surface">DINNER</span>
+</div>
+<span class="text-label-sm text-error font-bold mt-0.5 block">NOT EATEN</span>
+</div>
+<div class="flex space-x-2">
+<button class="px-3 py-1.5 rounded bg-surface-variant text-on-surface-variant text-label-sm font-medium hover:bg-primary-container hover:text-on-primary-container">EATEN</button>
+<button class="px-3 py-1.5 rounded bg-error text-on-error text-label-sm font-bold shadow-sm">NOT EATEN</button>
+</div>
+</div>
+</section>
+<!-- Meal History Table/List -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-on-surface">Meal History</h3>
+<span class="text-label-sm text-outline">05 Sep - 23 Sep</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-label-sm text-on-surface-variant border-b border-outline-variant">
+<th class="p-3 font-bold">DATE</th>
+<th class="p-3 font-bold">DAY</th>
+<th class="p-3 font-bold">BREAKFAST</th>
+<th class="p-3 font-bold">DINNER</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant text-body-sm">
+<!-- Today -->
+<tr class="bg-primary-fixed/20">
+<td class="p-3 font-bold text-primary">23 Sep</td>
+<td class="p-3 text-on-surface">Wed</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-secondary-container text-on-secondary-container">PENDING</span></td>
+</tr>
+<!-- Previous Days -->
+<tr>
+<td class="p-3 font-medium text-on-surface">22 Sep</td>
+<td class="p-3 text-on-surface-variant">Tue</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="p-3 font-medium text-on-surface">21 Sep</td>
+<td class="p-3 text-on-surface-variant">Mon</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-error-container text-on-error-container">NOT EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr>
+<td class="p-3 font-medium text-on-surface">20 Sep</td>
+<td class="p-3 text-on-surface-variant">Sun</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="p-3 font-medium text-on-surface">19 Sep</td>
+<td class="p-3 text-on-surface-variant">Sat</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-error-container text-on-error-container">NOT EATEN</span></td>
+</tr>
+<tr>
+<td class="p-3 font-medium text-on-surface">18 Sep</td>
+<td class="p-3 text-on-surface-variant">Fri</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="p-3 font-medium text-on-surface">17 Sep</td>
+<td class="p-3 text-on-surface-variant">Thu</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr>
+<td class="p-3 font-medium text-on-surface">16 Sep</td>
+<td class="p-3 text-on-surface-variant">Wed</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-error-container text-on-error-container">NOT EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="p-3 font-medium text-on-surface">15 Sep</td>
+<td class="p-3 text-on-surface-variant">Tue</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr>
+<td class="p-3 font-medium text-on-surface">14 Sep</td>
+<td class="p-3 text-on-surface-variant">Mon</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="p-3 font-medium text-on-surface">13 Sep</td>
+<td class="p-3 text-on-surface-variant">Sun</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr>
+<td class="p-3 font-medium text-on-surface">12 Sep</td>
+<td class="p-3 text-on-surface-variant">Sat</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-error-container text-on-error-container">NOT EATEN</span></td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="p-3 font-medium text-on-surface">11 Sep</td>
+<td class="p-3 text-on-surface-variant">Fri</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr>
+<td class="p-3 font-medium text-on-surface">10 Sep</td>
+<td class="p-3 text-on-surface-variant">Thu</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="p-3 font-medium text-on-surface">09 Sep</td>
+<td class="p-3 text-on-surface-variant">Wed</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr>
+<td class="p-3 font-medium text-on-surface">08 Sep</td>
+<td class="p-3 text-on-surface-variant">Tue</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="p-3 font-medium text-on-surface">07 Sep</td>
+<td class="p-3 text-on-surface-variant">Mon</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+<tr>
+<td class="p-3 font-medium text-on-surface">06 Sep</td>
+<td class="p-3 text-on-surface-variant">Sun</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-error-container text-on-error-container">NOT EATEN</span></td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="p-3 font-medium text-on-surface">05 Sep</td>
+<td class="p-3 text-on-surface-variant">Sat</td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-surface-variant text-on-surface-variant">NOT RECORDED</span></td>
+<td class="p-3"><span class="px-2 py-0.5 rounded text-label-sm font-bold bg-primary-container text-on-primary-container">EATEN</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Component -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-background flex justify-around items-center px-4 py-2 max-w-md mx-auto right-0">
+<!-- HOME (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 border-2 border-transparent rounded-xl hover:bg-surface-container-high hover:text-on-surface transition-none" href="#">
+<span class="material-symbols-outlined text-xl">home</span>
+<span class="font-label text-xs font-bold uppercase tracking-wider mt-0.5">HOME</span>
+</a>
+<!-- MEALS (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container border-2 border-outline px-3 py-1.5 shadow-[2px_2px_0px_0px_#1a1a1a] rounded-xl" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+<span class="font-label text-xs font-bold uppercase tracking-wider mt-0.5">MEALS</span>
+</a>
+<!-- PROFILE (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 border-2 border-transparent rounded-xl hover:bg-surface-container-high hover:text-on-surface transition-none" href="#">
+<span class="material-symbols-outlined text-xl">person</span>
+<span class="font-label text-xs font-bold uppercase tracking-wider mt-0.5">PROFILE</span>
+</a>
+</nav>
+
+
+</body></html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MessMate - Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error": "#ba1a1a",
+            "inverse-on-surface": "#e7f4eb",
+            "surface-container-high": "#deebe3",
+            "on-tertiary-fixed": "#131b2e",
+            "surface-tint": "#006c4e",
+            "primary-fixed": "#97f5cc",
+            "on-secondary-fixed": "#2a1700",
+            "on-tertiary-fixed-variant": "#3f465c",
+            "error-container": "#ffdad6",
+            "background": "#f0fdf4",
+            "surface-container-lowest": "#ffffff",
+            "surface": "#f0fdf4",
+            "surface-variant": "#d9e6dd",
+            "secondary-fixed-dim": "#ffb95f",
+            "on-primary-container": "#9ffdd3",
+            "inverse-primary": "#7bd8b1",
+            "secondary-fixed": "#ffddb8",
+            "inverse-surface": "#27332d",
+            "outline": "#6e7a73",
+            "secondary": "#855300",
+            "surface-container-highest": "#d9e6dd",
+            "primary": "#005d42",
+            "on-error-container": "#93000a",
+            "on-secondary": "#ffffff",
+            "on-surface": "#131e19",
+            "surface-container": "#e4f1e8",
+            "on-primary": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed": "#dae2fd",
+            "surface-bright": "#f0fdf4",
+            "on-surface-variant": "#3e4943",
+            "on-error": "#ffffff",
+            "on-background": "#131e19",
+            "on-secondary-fixed-variant": "#653e00",
+            "on-primary-fixed": "#002115",
+            "surface-container-low": "#eaf7ee",
+            "tertiary": "#495167",
+            "tertiary-fixed-dim": "#bec6e0",
+            "surface-dim": "#d0ddd5",
+            "outline-variant": "#bdc9c1",
+            "secondary-container": "#fea619",
+            "primary-container": "#047857",
+            "on-tertiary-container": "#e4e9ff",
+            "on-secondary-container": "#684000",
+            "primary-fixed-dim": "#7bd8b1",
+            "tertiary-container": "#616980",
+            "on-primary-fixed-variant": "#00513a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-xl": "2.5rem",
+            "margin": "2rem",
+            "space-lg": "1.5rem",
+            "gutter": "1.5rem"
+          },
+          "fontFamily": {
+            "label-sm": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-sm": ["20px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f0fdf4;
+      color: #131e19;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col justify-between selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-background dark:bg-background">
+<div class="flex justify-between items-center w-full px-4 py-3 max-w-md mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary dark:text-primary text-2xl">restaurant</span>
+<h1 class="font-headline text-2xl font-extrabold uppercase tracking-tighter text-primary dark:text-primary">MessMate</h1>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-sm shadow-[2px_2px_0px_0px_#005d42]">
+        SD
+      </div>
+</div>
+</header>
+<!-- Main Profile Content Canvas -->
+<main class="w-full max-w-md mx-auto px-4 pt-20 pb-28 flex-1 flex flex-col gap-6">
+<!-- Profile Header Section -->
+<section class="flex flex-col items-center text-center pt-4 pb-2">
+<div class="relative mb-3">
+<div class="w-24 h-24 rounded-full bg-primary text-on-primary flex items-center justify-center text-3xl font-extrabold tracking-wider shadow-lg ring-4 ring-primary-container/30">
+          SD
+        </div>
+<div class="absolute bottom-0 right-0 w-7 h-7 bg-secondary-container rounded-full flex items-center justify-center text-on-secondary-container shadow-md border-2 border-background">
+<span class="material-symbols-outlined text-sm font-bold" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<h2 class="font-headline-md text-on-surface">Sahil Dubey</h2>
+<p class="font-body-sm text-on-surface-variant mt-0.5">sahil@messmate.app</p>
+</section>
+<!-- Account Information Card -->
+<div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/50 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between text-on-surface-variant pb-2 border-b border-surface-variant">
+<span class="font-label-md text-outline">ACCOUNT STATUS</span>
+<span class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded-full font-label-sm">Active Member</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">calendar_month</span>
+</div>
+<div>
+<p class="font-body-md font-semibold text-on-surface">MESS JOINED</p>
+<p class="font-body-sm text-on-surface-variant">Subscription Start Date</p>
+</div>
+</div>
+<span class="font-body-md font-bold text-primary">05 September 2026</span>
+</div>
+</div>
+<!-- Download Report Section -->
+<div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/50 shadow-sm flex flex-col gap-4">
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-xl">description</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-on-surface text-base">MEAL REPORT</h3>
+<p class="font-body-sm text-on-surface-variant mt-0.5">Download your complete mess meal history.</p>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary-container text-on-primary font-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-sm">
+<span class="material-symbols-outlined text-lg">download</span>
+<span>DOWNLOAD REPORT</span>
+</button>
+</div>
+<!-- Logout Action -->
+<div class="pt-2">
+<button class="w-full bg-error-container/40 hover:bg-error-container text-error font-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98] border border-error/20">
+<span class="material-symbols-outlined text-lg">logout</span>
+<span>LOGOUT</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 max-w-md mx-auto bg-background dark:bg-background">
+<!-- HOME (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1.5 border-2 border-transparent rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined text-xl">home</span>
+<span class="font-label text-xs font-bold uppercase tracking-wider mt-1">HOME</span>
+</a>
+<!-- MEALS (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1.5 border-2 border-transparent rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined text-xl">restaurant_menu</span>
+<span class="font-label text-xs font-bold uppercase tracking-wider mt-1">MEALS</span>
+</a>
+<!-- PROFILE (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container border-2 border-outline px-3 py-1.5 shadow-[2px_2px_0px_0px_#1a1a1a] rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label text-xs font-bold uppercase tracking-wider mt-1">PROFILE</span>
+</a>
+</nav>
+</body></html>
