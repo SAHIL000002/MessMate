@@ -55,6 +55,24 @@ const PROBE_TIMEOUT = 4000;
 // leave the user staring at a spinner forever.
 const SYNC_TIMEOUT = 10000;
 
+// Sign in and sign up are the only calls that MUST reach the server, and the
+// free hosting tier sleeps when it is not used: the first request of the day
+// can take ~25 seconds to answer because the instance is still booting. Being
+// told "you are offline" after 10s - and then seeing it work 10s later - is a
+// bug, not a state. These calls therefore get a cold-start-sized budget.
+const AUTH_TIMEOUT = 30000;
+
+// Waiting for a sleeping server must not turn into waiting forever, and it
+// must never delay a phone that simply has no connection. The ladder keeps the
+// old impatient 4s first probe; only a SLOW answer escalates, because only a
+// slow answer means "the server is there, it is just starting".
+const COLD_START_TIMEOUTS = [4000, 12000, 20000];
+const COLD_START_DELAYS = [500, 1500];
+
+// One extra try after a request that failed instantly (a DNS blip, a Wi-Fi
+// handover). Short on purpose: time cannot fix a phone in airplane mode.
+const QUICK_RETRY_DELAY = 300;
+
 const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: SYNC_TIMEOUT,
@@ -65,6 +83,79 @@ const api = axios.create({
 export function isNetworkError(error) {
   if (error?.response) return false; // the server answered - not a network problem
   return true;
+}
+
+/** True when the server exists but did not answer inside its budget. */
+export function isTimeoutError(error) {
+  if (error?.response) return false; // the server answered - not a timeout
+  if (error?.code === 'ECONNABORTED' || error?.code === 'ETIMEDOUT') return true;
+  return /timeout/i.test(String(error?.message || ''));
+}
+
+/** The hosting edge answered while the instance was still booting. */
+function isWakingError(error) {
+  const status = error?.response?.status;
+  return status === 502 || status === 504;
+}
+
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Wait for the server to answer instead of declaring it offline too early.
+ *
+ * The API runs on a free hosting tier that sleeps when idle, so the first
+ * request after that waits for the instance to boot - around 20 seconds, which
+ * is far longer than a normal request timeout. This ladder gives it that time:
+ *
+ *   - a SLOW answer (timeout, or 502/504 from the edge) means "it is starting",
+ *     so it is retried with a bigger budget;
+ *   - an INSTANT failure (airplane mode, no Wi-Fi, wrong host) is not retried
+ *     in a loop, because waiting cannot fix it.
+ *
+ * Returns { ok, health, error, attempts, waitedMs }. It never throws.
+ */
+export async function wakeUpServer(options = {}) {
+  const timeouts = options.timeouts || COLD_START_TIMEOUTS;
+  const delays = options.delays || COLD_START_DELAYS;
+  const startedAt = Date.now();
+
+  let attempts = 0;
+  let quickRetryUsed = false;
+  let lastError = null;
+
+  const result = (ok, health) => ({
+    ok,
+    health: health || null,
+    error: ok ? null : lastError,
+    attempts,
+    waitedMs: Date.now() - startedAt,
+  });
+
+  for (let i = 0; i < timeouts.length; i += 1) {
+    attempts += 1;
+
+    try {
+      const { data } = await api.get('/health', { timeout: timeouts[i] });
+      return result(true, data);
+    } catch (error) {
+      lastError = error;
+
+      if (!isTimeoutError(error) && !isWakingError(error)) {
+        // Waiting cannot fix this one, so only a single quick retry is made.
+        if (quickRetryUsed) break;
+        quickRetryUsed = true;
+        await wait(options.quickRetryDelay ?? QUICK_RETRY_DELAY);
+        continue;
+      }
+
+      // The server is there but slow: give it more time before trying again.
+      if (i < timeouts.length - 1) {
+        await wait(delays[i] ?? delays[delays.length - 1] ?? 0);
+      }
+    }
+  }
+
+  return result(false, null);
 }
 
 // Turn Axios failures into one short, human-readable message so every
@@ -79,6 +170,10 @@ export function getErrorMessage(error) {
   // 2. The server answered, but without a usable message.
   if (status === 401) return 'Incorrect username/email or password.';
   if (status === 409) return 'That username or email is already registered.';
+  if (status === 502 || status === 504) {
+    // The hosting edge answered while the instance was still starting.
+    return 'The MessMate server is starting up. Please try again in a few seconds.';
+  }
   if (status === 503) {
     return 'The MessMate server cannot reach its database right now. Please try again shortly.';
   }
@@ -95,21 +190,50 @@ export function getErrorMessage(error) {
 /* Auth                                                                */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Run a sign-in / sign-up call with cold-start protection.
+ *
+ * The call gets the longer auth budget. If it still fails without an answer,
+ * the server is probed until it DOES answer, and the call is then repeated
+ * exactly once. A real answer from the server (401, 409, 503...) is never
+ * retried - the user has to see it - and the password is never kept anywhere
+ * to be replayed later.
+ */
+async function authWithWakeUp(run, options = {}) {
+  const timeout = options.timeout ?? AUTH_TIMEOUT;
+
+  try {
+    return await run(timeout);
+  } catch (error) {
+    // The server answered, or there is no connection at all: do not loop.
+    if (!isNetworkError(error)) throw error;
+    if (!isTimeoutError(error) && !isWakingError(error)) throw error;
+
+    const woke = await wakeUpServer(options.wakeUp);
+    if (!woke.ok) throw error;
+
+    return run(timeout);
+  }
+}
+
 /** POST /api/auth/register -> { id, username, email, joinDate } */
-export async function registerUser({ username, email, password, joinDate }) {
-  const { data } = await api.post('/auth/register', {
-    username,
-    email,
-    password,
-    joinDate,
-  });
-  return data;
+export async function registerUser({ username, email, password, joinDate }, options) {
+  return authWithWakeUp(async (timeout) => {
+    const { data } = await api.post(
+      '/auth/register',
+      { username, email, password, joinDate },
+      { timeout },
+    );
+    return data;
+  }, options);
 }
 
 /** POST /api/auth/login -> { id, username, email, joinDate } (no token exists) */
-export async function loginUser({ identifier, password }) {
-  const { data } = await api.post('/auth/login', { identifier, password });
-  return data;
+export async function loginUser({ identifier, password }, options) {
+  return authWithWakeUp(async (timeout) => {
+    const { data } = await api.post('/auth/login', { identifier, password }, { timeout });
+    return data;
+  }, options);
 }
 
 /* ------------------------------------------------------------------ */
@@ -163,10 +287,26 @@ export async function saveMealRecord({ userId, date, breakfast, dinner }) {
 /* Health                                                              */
 /* ------------------------------------------------------------------ */
 
-/** GET /api/health - also used as the "is the server reachable?" probe. */
+/** GET /api/health - one quick attempt, exactly as before. */
 export async function checkHealth() {
   const { data } = await api.get('/health', { timeout: PROBE_TIMEOUT });
   return data;
+}
+
+/**
+ * GET /api/health, giving a sleeping server time to wake up.
+ *
+ * Used by the online/offline check, so a slow cold start is not mistaken for
+ * "you are offline". Throws only when even the whole ladder got no answer.
+ */
+export async function checkHealthWithWakeUp(options) {
+  const result = await wakeUpServer(options);
+
+  if (!result.ok) {
+    throw result.error || new Error('The MessMate server did not answer.');
+  }
+
+  return result.health;
 }
 
 export default api;

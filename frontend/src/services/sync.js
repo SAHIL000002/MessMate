@@ -56,7 +56,9 @@ export async function isOnline() {
   if (probe.at && now - probe.at < PROBE_CACHE_MS) return probe.online;
 
   try {
-    const health = await api.checkHealth();
+    // Cold-start aware: a server that is still waking up is waited for
+    // (api.wakeUpServer) instead of being called offline after 4 seconds.
+    const health = await api.checkHealthWithWakeUp();
 
     if (health?.ok) {
       rememberReachable();
